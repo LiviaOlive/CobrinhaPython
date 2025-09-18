@@ -7,7 +7,7 @@ pygame.init()
 # Dimensões da tela
 largura, altura = 600, 400
 tela = pygame.display.set_mode((largura, altura))
-pygame.display.set_caption("Snake Game 🐍")
+pygame.display.set_caption("Cobrinha 🐍")
 
 # Cores
 preto = (0, 0, 0)
