@@ -62,16 +62,16 @@ def jogo():
             if event.type == pygame.QUIT:
                 fim_de_jogo = True
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and x_mudanca == 0:
                     x_mudanca = -tamanho_bloco
                     y_mudanca = 0
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT and x_mudanca == 0:
                     x_mudanca = tamanho_bloco
                     y_mudanca = 0
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP and y_mudanca == 0:
                     y_mudanca = -tamanho_bloco
                     x_mudanca = 0
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and y_mudanca == 0:
                     y_mudanca = tamanho_bloco
                     x_mudanca = 0
 
@@ -79,7 +79,7 @@ def jogo():
         y += y_mudanca
 
         if x < 0 or x >= largura or y < 0 or y >= altura:
-            fim_de_jogo = True
+            game_over = True
 
         tela.fill(preto)
         pygame.draw.rect(tela, vermelho, [comida_x, comida_y, tamanho_bloco, tamanho_bloco])
@@ -90,9 +90,8 @@ def jogo():
         if len(corpo_cobra) > comprimento_cobra:
             del corpo_cobra[0]
 
-        for bloco in corpo_cobra[:-1]:
-            if bloco == cobra_cabeca:
-                game_over = True
+        if cobra_cabeca in corpo_cobra[:-1]:
+            game_over = True
 
         for bloco in corpo_cobra:
             pygame.draw.rect(tela, verde, [bloco[0], bloco[1], tamanho_bloco, tamanho_bloco])
@@ -105,7 +104,7 @@ def jogo():
         #Atualiza comida quando a cobra comer
         if x == comida_x and y == comida_y:
             comida_x = round(random.randrange(0, largura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
-            comida_y = round(random.randrange(0, altura - tamanho_bloco) / tamanho_bloco)
+            comida_y = round(random.randrange(0, altura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
             comprimento_cobra += 1
 
 
