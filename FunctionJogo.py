@@ -12,8 +12,16 @@ def jogo(tela, fonte, largura, altura, preto, verde, vermelho, branco, clock, ta
         y_mudanca = 0
         corpo_cobra = []
         comprimento_cobra = 1
-        comida_x = round(random.randrange(0, largura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
-        comida_y = round(random.randrange(0, altura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
+
+        # Sorteia a posição da fruta sem sobrepor o corpo da cobra
+        def nova_fruta():
+            while True:
+                fruta_x = round(random.randrange(0, largura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
+                fruta_y = round(random.randrange(0, altura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
+                if [fruta_x, fruta_y] not in corpo_cobra:
+                    return fruta_x, fruta_y
+
+        comida_x, comida_y = nova_fruta()
 
         while not fim_de_jogo:
             while game_over:
@@ -84,6 +92,5 @@ def jogo(tela, fonte, largura, altura, preto, verde, vermelho, branco, clock, ta
             clock.tick(velocidade)
 
             if x == comida_x and y == comida_y:
-                comida_x = round(random.randrange(0, largura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
-                comida_y = round(random.randrange(0, altura - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
+                comida_x, comida_y = nova_fruta()
                 comprimento_cobra += 1
