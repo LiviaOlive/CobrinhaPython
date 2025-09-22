@@ -12,6 +12,7 @@ def jogo(tela, fonte, largura, altura, preto, verde, vermelho, branco, clock, ta
         y_mudanca = 0
         corpo_cobra = []
         comprimento_cobra = 1
+        direcao = "RIGHT"
 
         # Sorteia a posição da fruta sem sobrepor o corpo da cobra
         def nova_fruta():
@@ -55,18 +56,22 @@ def jogo(tela, fonte, largura, altura, preto, verde, vermelho, branco, clock, ta
                     jogando = False
                     fim_de_jogo = True
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT and x_mudanca == 0:
+                    if event.key == pygame.K_LEFT and direcao != "RIGHT":
                         x_mudanca = -tamanho_bloco
                         y_mudanca = 0
-                    elif event.key == pygame.K_RIGHT and x_mudanca == 0:
+                        direcao = "LEFT"
+                    elif event.key == pygame.K_RIGHT and direcao != "LEFT":
                         x_mudanca = tamanho_bloco
                         y_mudanca = 0
-                    elif event.key == pygame.K_UP and y_mudanca == 0:
+                        direcao = "RIGHT"
+                    elif event.key == pygame.K_UP and direcao != "DOWN":
                         y_mudanca = -tamanho_bloco
                         x_mudanca = 0
-                    elif event.key == pygame.K_DOWN and y_mudanca == 0:
+                        direcao = "UP"
+                    elif event.key == pygame.K_DOWN and direcao != "UP":
                         y_mudanca = tamanho_bloco
                         x_mudanca = 0
+                        direcao = "DOWN"
 
             x += x_mudanca
             y += y_mudanca
